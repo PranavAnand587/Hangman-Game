@@ -1,15 +1,18 @@
 # Hangman-Game
 A Simple but fun Hangman game made with Python3
 
+This is how the Game looks like &rarr;
 ![This is how the Game looks like](/images/screenshot.png)
+
+The Game Over screen &rarr;
 ![Oh no! Game Over!!!](/images/gameover.png)
 
-#Usage
+# Usage
 
 1.To play the game you will have to install [Python](https://www.python.org/downloads/)
 
 2.After installing it go ahead and open your Command Prompt(for Windows)/Terminal(MacOS/Linux)
->To open your Command Prompt, Search `cmd` in your search bar
+>To open your Command Prompt, Search `cmd` in your search bar, for Windows
 
 ![Your Terminal](/images/shell.png)
 
