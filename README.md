@@ -1,10 +1,9 @@
 # Hangman-Game
 A Simple but fun Hangman game made with Python3
 
-This is how the Game looks like &rarr;
+# Screenshots
 ![This is how the Game looks like](/images/screenshot.png)
 
-The Game Over screen &rarr;
 ![Oh no! Game Over!!!](/images/gameover.png)
 
 # Usage
@@ -15,7 +14,7 @@ The Game Over screen &rarr;
 
 >To open your Command Prompt, Search `cmd` in your search bar, for Windows
 
-![Your Command Prompt](/images/cmd.png)
+![Your Command Prompt](/images/shell.png)
 
 >Open the Dash by clicking the Ubuntu icon in the upper-left, type "terminal", and select the Terminal application from the results that appear, for Ubuntu
 
@@ -23,7 +22,7 @@ The Game Over screen &rarr;
 
 >Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal, for MacOS
 
-![Your Terminal](/images/termianl_mac.png)
+![Your Terminal](/images/terminal_mac.png)
 
 3. Run `python hangman.py` command in the directory where you have cloned the Repository.
 
