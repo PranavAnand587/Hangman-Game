@@ -9,13 +9,22 @@ The Game Over screen &rarr;
 
 # Usage
 
-1.To play the game you will have to install [Python](https://www.python.org/downloads/)
+1. To play the game you will have to install [Python](https://www.python.org/downloads/)
 
-2.After installing it go ahead and open your Command Prompt(for Windows)/Terminal(MacOS/Linux)
+2. After installing it go ahead and open your Command Prompt(for Windows) or Terminal(MacOS/Linux)
+
 >To open your Command Prompt, Search `cmd` in your search bar, for Windows
 
-![Your Terminal](/images/shell.png)
+![Your Command Prompt](/images/cmd.png)
 
-3.run `python hangman.py` command in the directory where you have cloned the Repository.
+>Open the Dash by clicking the Ubuntu icon in the upper-left, type "terminal", and select the Terminal application from the results that appear, for Ubuntu
 
-4.Voila, Here's your Game. Enjoy!!
+![Your Terminal](/images/terminal_ubuntu.png)
+
+>Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal, for MacOS
+
+![Your Terminal](/images/termianl_mac.png)
+
+3. Run `python hangman.py` command in the directory where you have cloned the Repository.
+
+4. Voila, Here's your Game. Enjoy!!
