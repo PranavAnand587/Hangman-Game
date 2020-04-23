@@ -1,5 +1,6 @@
 import random
 import sys, os, time
+import story
 
 # List of Hangman ASCII characters
 hangmans = ['''
@@ -39,7 +40,7 @@ hangmans = ['''
                                    / \  |
                                        ===''']
 
-startText = '''
+logo= '''
 ==========================================================================
              _                                             
             | |                                          
@@ -50,15 +51,9 @@ startText = '''
                                 __/ |                      
                                |___/  
 ==========================================================================
-
-Rules:  Let me get this staright. The rules of the game are pretty simple,
-        You will be made to guess the letters of an unknown word,on your 
-        friend's life. Remember, you only have 6 LIVES. A wrong guess means
-        A life lost. Once you waste all your lives, you won't see your friend 
-        again. But if you happen to guess the word before he dies, well then 
-                    your dear friend is ALIVE..!!
-
 '''
+
+border="======================================================="
 
 # Get words from words.txt file
 f = open('words.txt', 'r+')
@@ -103,11 +98,13 @@ def main_menu():
     n = input("Enter your choice : ")
 
     if(n=='0'):
+        typewriter(story.exitText)
         sys.exit()  # Exits the game
     elif(n=='1'):
+        typewriter(story.playText)
         game()  # Plays the Game
     else:
-        typewriter("Invalid Input")  # Handles Invalid Input
+        typewriter("Select something valid before the masked man pulls his trigger")  # Handles Invalid Input
         main_menu()
 
 
@@ -119,9 +116,9 @@ def game_status(blanks,guessed_words,lives):
 
     print(f'''
     Word to Guess : {hidden_word}
-    Lives Left: {lives}
+    No of Wrong Guesses left: {lives}
     Words Guessed already: {guessed_words_str}
-    Your Friend Now --> {hangmans[6-lives]}''') # Displaying Hangman picture
+    The Hangman right now --> {hangmans[6-lives]}''') # Displaying Hangman picture
 
 
 
@@ -147,15 +144,12 @@ def game():
         # Handling correct guesses
         for i in range(len(word)):
             if(n==word[i]):
-                print(f'''
-    =======================================================                
-                Well done "{n}" is in the word
-    =======================================================''')
+                print(f"{border}\n\t Well done '{n}' is in the word \n{border}")
                 blanks[i]=n # Replacing the blank with word
 
         # Handling Invalid Input
         if(not n.isalpha or len(n)>1):
-            typewriter("\n    Invalid Input, Please enter a letter between A to Z")
+            typewriter("\n    Hitting your head with the gun he said: 'I want a letter'")
 
         # Registering guessed words
         elif(n not in guessed_words):
@@ -163,7 +157,7 @@ def game():
 
         #Handling already Guessed words
         else:
-            typewriter("\n    You have already guessed this word guess something else \n")
+            typewriter("\n    You have already guessed this, guess something else or I'll pull this trigger right now \n")
 
 
         # Wrong Guess
@@ -171,15 +165,11 @@ def game():
 
             # Handling Wrong Guesses
             lives = lives - 1
-            print(f'''
-    =====================================================            
-        Sorry, but "{n}" is not present in the word
-    =====================================================            ''')
-
+            print(f"{border}\n\t Sorry, but '{n}' is not present in the word \n{border}")
             # GameOver logic
             if(lives==1):
                 print(hangmans[6])
-                typewriter("Sorry seems like you coudn't figure out the word and betrayed your friend")
+                typewriter(story.exitText)
                 typewriter("\nThe word was : {}".format("".join(word)))    # Displaying actual word
                 _n = input('''
 
@@ -193,6 +183,10 @@ def game():
 
                 # Handling Player replay input
                 if(_n=='1'):
+                    print(logo)
+                    skip_story = int(input('Press 1 to skip the story or anything else to continue : '))
+                    if(skip_story!=1):
+                        typewriter(story.storyText)
                     game()
                 else:
                     sys.exit()
@@ -200,7 +194,7 @@ def game():
 
         # When Player wins the game 
         if(blanks==word):
-            print(f'''
+            print(f'''{border}{border}{border}\n
     =============================================================================================================
         Look's like you WIN!!! Congratulations, You were successful in guessing the word : {"".join(word)} \n
     =============================================================================================================''')
@@ -216,11 +210,16 @@ def game():
     
             # Handling Player replay input
             if(n=='1'):
+                print(logo)
+                skip_story = int(input('Press 1 to skip the story or anything else to continue : '))
+                if(skip_story!=1):
+                    typewriter(story.storyText)
                 game()
             else:
                 sys.exit()
     
 
 # Playing the Game
-print(startText)
+print(logo)
+typewriter(story.storyText)
 main_menu()
