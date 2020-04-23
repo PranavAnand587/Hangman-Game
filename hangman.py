@@ -1,7 +1,7 @@
 import random
-import sys
+import sys, os, time
 
-#list of Hangman ASCII characters
+# List of Hangman ASCII characters
 hangmans = ['''
                                     +---+
                                         |
@@ -39,26 +39,6 @@ hangmans = ['''
                                    / \  |
                                        ===''']
 
-# Get words from words.txt file
-f = open('words.txt','r+')
-data = f.readlines()
-f.close()
-
-# Convert the words into a list
-def words_list():
-    for line in data:
-        word = line.split()
-        return word
-words=words_list()
-
-# Get a random word
-def get_random_word():
-    rn = random.randint(0,len(words))
-    word = words[rn]
-    word.upper()
-    return word
-
-
 startText = '''
 ==========================================================================
              _                                             
@@ -71,43 +51,78 @@ startText = '''
                                |___/  
 ==========================================================================
 
-Rules:  The rules of the game are simple, You will be made to guess a word,
-        and you have 6 Lives. Incorrect Guess leads to the loss of one Life
-        Once you waste all the lives, your poor friend hangman is gonna be 
-        hanged. But if you happen to guess the word, well then your dear 
-                           friends is ALIVE..!!
+Rules:  Let me get this staright. The rules of the game are pretty simple,
+        You will be made to guess the letters of an unknown word,on your 
+        friend's life. Remember, you only have 6 LIVES. A wrong guess means
+        A life lost. Once you waste all your lives, you won't see your friend 
+        again. But if you happen to guess the word before he dies, well then 
+                    your dear friend is ALIVE..!!
 
 '''
+
+# Get words from words.txt file
+f = open('words.txt', 'r+')
+data = f.readlines()
+f.close()
+
+
+# Convert the words into a list
+def words_list():
+    for line in data:
+        word = line.split()
+        return word
+words= words_list()
+
+# Get a random word
+def get_random_word():
+    rn = random.randint(0,len(words))
+    word = words[rn]
+    word.lower()
+    return word
+
+# For typewriter animation
+def typewriter(message):
+    for char in message:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
 
 # Main Menu of the game
 def main_menu():
  
+    # Menu Text
     menu = '''
     Please select one of the following :-
 
     0 -> Exit 
     1 -> Play The Game
-'''
+    '''
     print(menu)
+
     n = input("Enter your choice : ")
 
     if(n=='0'):
-        sys.exit()
+        sys.exit()  # Exits the game
     elif(n=='1'):
-        game()
+        game()  # Plays the Game
     else:
-        print("Invalid Input")
+        typewriter("Invalid Input")  # Handles Invalid Input
         main_menu()
+
 
 # Updating status of Game
 def game_status(blanks,guessed_words,lives):
-    hidden_word = " ".join(blanks)
-    guessed_words_str = " ".join(guessed_words)
+
+    hidden_word = " ".join(blanks)  # The word with blanks
+    guessed_words_str = " ".join(guessed_words) # List of guessed words
+
     print(f'''
     Word to Guess : {hidden_word}
     Lives Left: {lives}
     Words Guessed already: {guessed_words_str}
-    Your Friend Now --> {hangmans[6-lives]}''')
+    Your Friend Now --> {hangmans[6-lives]}''') # Displaying Hangman picture
+
 
 
 #Main loop of the Game
@@ -132,58 +147,79 @@ def game():
         # Handling correct guesses
         for i in range(len(word)):
             if(n==word[i]):
-                print("\n    Well done "+n+" is in the word")
-                blanks[i]=n
+                print(f'''
+    =======================================================                
+                Well done "{n}" is in the word
+    =======================================================''')
+                blanks[i]=n # Replacing the blank with word
 
         # Handling Invalid Input
         if(not n.isalpha or len(n)>1):
-            print("\n    Invalid Input, Please enter a letter between A to Z")
+            typewriter("\n    Invalid Input, Please enter a letter between A to Z")
+
         # Registering guessed words
         elif(n not in guessed_words):
             guessed_words.append(n)
+
         #Handling already Guessed words
         else:
-            print("\n    You have already guessed this word guess something else")
+            typewriter("\n    You have already guessed this word guess something else \n")
+
 
         # Wrong Guess
         if(n not in word):
 
             # Handling Wrong Guesses
             lives = lives - 1
-            print("\n    Sorry, but "+n+" is not present in the word")
+            print(f'''
+    =====================================================            
+        Sorry, but "{n}" is not present in the word
+    =====================================================            ''')
 
             # GameOver logic
             if(lives==1):
                 print(hangmans[6])
-                print("Sorry seems like you coudn't figure out the word and betrayed your friend")
-                print("The word was : {}".format("".join(word)))
+                typewriter("Sorry seems like you coudn't figure out the word and betrayed your friend")
+                typewriter("\nThe word was : {}".format("".join(word)))    # Displaying actual word
                 _n = input('''
-    Would you like to play the game once more
 
-Press:
-    1               ->   to play again
-    Anything else   ->   to Exit
-                ''')
+    ======================================================
+        Would you like to play the game once more
+
+    Press:
+        1               ->   to play again
+        Anything else   ->   to Exit
+    ======================================================> ''')    #Player Replay option
+
+                # Handling Player replay input
                 if(_n=='1'):
                     game()
                 else:
-                    break
+                    sys.exit()
+
 
         # When Player wins the game 
         if(blanks==word):
-            print(f'''\nLook's like you WIN!!! Congratulations, You were successful in guessing the word : {str(word)} \n''')
+            print(f'''
+    =============================================================================================================
+        Look's like you WIN!!! Congratulations, You were successful in guessing the word : {"".join(word)} \n
+    =============================================================================================================''')
             n = input('''
 
-    Would you like to play the game once more???
+    ======================================================
+        Would you like to play the game once more???
 
-Press:
-    1               ->   to play again
-    Anything else   ->   to Exit
-    ''')
+    Press:
+        1               ->   to play again
+        Anything else   ->   to Exit
+    =======================================================> ''')# Player Replay Text
+    
+            # Handling Player replay input
             if(n=='1'):
                 game()
             else:
-                break
+                sys.exit()
+    
 
 # Playing the Game
 print(startText)
