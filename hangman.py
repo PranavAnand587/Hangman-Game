@@ -1,10 +1,21 @@
+"""
+The Hangman game uses a premade ASCII arts of hangmans, logo and GameOver
+
+Proceed to https://ascii.co.uk/text to create ASCII art from text
+
+The story of the game and the word to used can be found in story.py and words.txt respectively
+
+"""
+
+
 import random
-import sys, os, time
+import sys, os, time    # For typewriter animation
 
 # colorama module lets you add colors in shell window
 from colorama import init, Fore, Style
 init()
 
+# Imports story of the game
 import story
 
 # List of Hangman ASCII characters
@@ -128,7 +139,7 @@ def main_menu():
         typewriter(story.exitText)
         sys.exit()  # Exits the game
     elif(n=='1'):
-        os.system("cls")
+        _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
         typewriter(story.playText)
         game()  # Plays the Game
     else:
@@ -151,7 +162,7 @@ def game_status(blanks,guessed_words,lives):
 
 # Replaying the game
 def replay_game():
-    os.system("cls")
+    _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
 
     print(logo)
 
@@ -188,19 +199,19 @@ def game():
         # Handling correct guesses
         for i in range(len(word)):
             if(n==word[i]):
-                os.system("cls")
-                print(f"{border}\nSeems like your a bit lucky, '{n}' is in the word \n{border}")
+                _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
+                print(f"{border}\n  Seems like your a bit lucky, '{n}' is in the word \n{border}")
                 blanks[i]=n # Replacing the blank with word
 
 
         # Handling Invalid Input
-        if(not n.isalpha or len(n)>1):
-            os.system("cls")
+        if(not n.isalpha() or len(n)>1):
+            _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
             typewriter("\n    Hitting your head with the gun he said: 'I want a letter'")
 
         #Handling already Guessed words
         elif(n in guessed_words):
-            os.system("cls")
+            _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
             typewriter('''\nThe Masked man said: "You have already guessed this, guess something else or I'll pull the trigger right now"\n''')
 
         # Wrong Guess
@@ -211,7 +222,7 @@ def game():
             # GameOver logic
             if(lives==1):
 
-                os.system("cls")
+                _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
 
                 print(hangmans[6])
                 typewriter(story.exitText)
@@ -228,8 +239,8 @@ def game():
 
             # Handling Wrong Guesses
             lives = lives - 1
-            os.system("cls")
-            print(f"{border}\n'{n}' is not in the word, your death is nearing \n{border}")
+            _ = os.system("cls") if os.name=="nt" else os.system("clear") # Clears the screen according to os type
+            print(f"{border}\n  '{n}' is not in the word, your death is nearing \n{border}")
 
         # Registering guessed words
         else:
