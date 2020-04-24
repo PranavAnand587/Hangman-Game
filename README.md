@@ -4,6 +4,8 @@ A Simple but fun Hangman game made with Python3
 # Screenshots
 ![This is how the Game looks like](/images/screenshot.png)
 
+![Gameplay](/images/gameplay.png)
+
 ![Oh no! Game Over!!!](/images/gameover.png)
 
 # Requirements
