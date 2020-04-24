@@ -19,7 +19,7 @@ rules?"'''
 
 playText = '''You nodded your head, too terrified to say any word
 
-Pulling the slide he said : "Perfect, Let's begin!" '''
+Pulling the slide of the gun he said : "Perfect, Let's begin!" '''
 
 exitText = '''The masked man kicks the chair from underneath him, hanging you. You start to choke
 desperately for air, as the rope swung back and forth. You start to limp and eventually stop moving. '''

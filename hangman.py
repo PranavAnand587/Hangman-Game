@@ -1,47 +1,52 @@
 import random
 import sys, os, time
+
+# colorama module lets you add colors in shell window
+from colorama import init, Fore, Style
+init()
+
 import story
 
 # List of Hangman ASCII characters
-hangmans = ['''
+hangmans = [Fore.GREEN + '''
                                     +---+
                                         |
                                         |
                                         |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                         |
                                         |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                     |   |
                                         |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                    /|   |
                                         |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                    /|\  |
                                         |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                    /|\  |
                                    /    |
-                                       ===''', '''
+                                       ===''' + Style.RESET_ALL, Fore.RED + '''
                                     +---+
                                     O   |
                                    /|\  |
                                    / \  |
-                                       ===''']
+                                       ===''' + Style.RESET_ALL]
 
-logo= '''
-==========================================================================
+logo= Fore.GREEN + '''
+ ==========================================================================
              _                                             
             | |                                          
             | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
@@ -50,16 +55,36 @@ logo= '''
             |_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
                                 __/ |                      
                                |___/  
-==========================================================================
-'''
-
+ ==========================================================================
+''' + Style.RESET_ALL
+ 
+game_over = Fore.RED + '''
+ ============================================================================================
+    ______       _       ____    ____  ________     ___   ____   ____  ________  _______     
+  .' ___  |     / \     |_   \  /   _||_   __  |  .'   `.|_  _| |_  _||_   __  ||_   __ \    
+ / .'   \_|    / _ \      |   \/   |    | |_ \_| /  .-.  \ \ \   / /    | |_ \_|  | |__) |   
+ | |   ____   / ___ \     | |\  /| |    |  _| _  | |   | |  \ \ / /     |  _| _   |  __ /    
+ \ `.___]  |_/ /   \ \_  _| |_\/_| |_  _| |__/ | \  `-'  /   \ ' /     _| |__/ | _| |  \ \_  
+  `._____.'|____| |____||_____||_____||________|  `.___.'     \_/     |________||____| |___|
+ ============================================================================================= 
+''' + Style.RESET_ALL
+ 
 border="======================================================="
+
+replayTxt=f'''
+
+    {border}
+        Would you like to play the game once more
+
+    Press:
+        1               ->   to play again
+        Anything else   ->   to Exit
+    {border}> '''
 
 # Get words from words.txt file
 f = open('words.txt', 'r+')
 data = f.readlines()
 f.close()
-
 
 # Convert the words into a list
 def words_list():
@@ -87,11 +112,13 @@ def typewriter(message):
 def main_menu():
  
     # Menu Text
-    menu = '''
+    menu = f'''
+    {border}
     Please select one of the following :-
 
     0 -> Exit 
     1 -> Play The Game
+    {border}
     '''
     print(menu)
 
@@ -101,6 +128,7 @@ def main_menu():
         typewriter(story.exitText)
         sys.exit()  # Exits the game
     elif(n=='1'):
+        os.system("cls")
         typewriter(story.playText)
         game()  # Plays the Game
     else:
@@ -115,15 +143,32 @@ def game_status(blanks,guessed_words,lives):
     guessed_words_str = " ".join(guessed_words) # List of guessed words
 
     print(f'''
+
     Word to Guess : {hidden_word}
     No of Wrong Guesses left: {lives}
     Words Guessed already: {guessed_words_str}
     The Hangman right now --> {hangmans[6-lives]}''') # Displaying Hangman picture
 
+# Replaying the game
+def replay_game():
+    os.system("cls")
 
+    print(logo)
 
-#Main loop of the Game
+    # Skip story functionality
+    skip_story = int(input('Press 1 to skip the story or anything else to continue : '))
+    if(skip_story!=1):
+        typewriter(story.storyText)
+
+    game()
+    
+
+# Main loop of the Game
+# 1. Controls game logic
+# 2. Shows Game status
+# 3. Handles Input of Game
 def game():
+
     # Total lives of player
     lives = 6
         
@@ -133,7 +178,6 @@ def game():
     guessed_words = []  #list of already guessed words
     
     while(lives > 0):
-
         # Shows current status of player
         game_status(blanks,guessed_words,lives)
 
@@ -144,82 +188,76 @@ def game():
         # Handling correct guesses
         for i in range(len(word)):
             if(n==word[i]):
-                print(f"{border}\n\t Well done '{n}' is in the word \n{border}")
+                os.system("cls")
+                print(f"{border}\nSeems like your a bit lucky, '{n}' is in the word \n{border}")
                 blanks[i]=n # Replacing the blank with word
+
 
         # Handling Invalid Input
         if(not n.isalpha or len(n)>1):
+            os.system("cls")
             typewriter("\n    Hitting your head with the gun he said: 'I want a letter'")
 
-        # Registering guessed words
-        elif(n not in guessed_words):
-            guessed_words.append(n)
-
         #Handling already Guessed words
-        else:
-            typewriter("\n    You have already guessed this, guess something else or I'll pull this trigger right now \n")
-
+        elif(n in guessed_words):
+            os.system("cls")
+            typewriter('''\nThe Masked man said: "You have already guessed this, guess something else or I'll pull the trigger right now"\n''')
 
         # Wrong Guess
-        if(n not in word):
+        elif(n not in word):
 
-            # Handling Wrong Guesses
-            lives = lives - 1
-            print(f"{border}\n\t Sorry, but '{n}' is not present in the word \n{border}")
+            guessed_words.append(n)
+
             # GameOver logic
             if(lives==1):
+
+                os.system("cls")
+
                 print(hangmans[6])
                 typewriter(story.exitText)
+                print(game_over)
                 typewriter("\nThe word was : {}".format("".join(word)))    # Displaying actual word
-                _n = input('''
 
-    ======================================================
-        Would you like to play the game once more
-
-    Press:
-        1               ->   to play again
-        Anything else   ->   to Exit
-    ======================================================> ''')    #Player Replay option
+                _n = input(f'{replayTxt}')    #Player Replay option
 
                 # Handling Player replay input
                 if(_n=='1'):
-                    print(logo)
-                    skip_story = int(input('Press 1 to skip the story or anything else to continue : '))
-                    if(skip_story!=1):
-                        typewriter(story.storyText)
-                    game()
+                    replay_game()
                 else:
                     sys.exit()
+
+            # Handling Wrong Guesses
+            lives = lives - 1
+            os.system("cls")
+            print(f"{border}\n'{n}' is not in the word, your death is nearing \n{border}")
+
+        # Registering guessed words
+        else:
+            guessed_words.append(n)
 
 
         # When Player wins the game 
         if(blanks==word):
-            print(f'''{border}{border}{border}\n
-    =============================================================================================================
-        Look's like you WIN!!! Congratulations, You were successful in guessing the word : {"".join(word)} \n
-    =============================================================================================================''')
-            n = input('''
+            print(f'''{border} \nLook's like you WIN!!! Impossible, the word is : {"".join(word)} \n{border}''')
 
-    ======================================================
-        Would you like to play the game once more???
-
-    Press:
-        1               ->   to play again
-        Anything else   ->   to Exit
-    =======================================================> ''')# Player Replay Text
+            n = input(f'{replayTxt}')# Player Replay Text
     
             # Handling Player replay input
             if(n=='1'):
-                print(logo)
-                skip_story = int(input('Press 1 to skip the story or anything else to continue : '))
-                if(skip_story!=1):
-                    typewriter(story.storyText)
-                game()
+                replay_game()
             else:
                 sys.exit()
     
 
 # Playing the Game
-print(logo)
-typewriter(story.storyText)
-main_menu()
+if __name__ == '__main__':
+    print(logo)
+
+    skip_story = input("Press 1 to skip story or anything else to continue : ")
+
+    if(skip_story == '1'):
+        main_menu()
+    else:
+        typewriter(story.storyText)
+        main_menu()
+    
