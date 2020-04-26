@@ -1,9 +1,18 @@
 # Hangman-Game
 
+# Table of Contents
+
+- [Overview](#overview)
+- [Project Details](#pdetails)
+- [Requirements](#req)
+- [Usage](#use)
+
+<a name="overview"/>
 ## Overview ##
 
 A Simple Hangman Game made with the Python Programming language as a part of our Python Programming Course’s Final Project. The project was made by the guidance of our instructor - Daksha mam.
 
+<a name="pdetails"/>
 ## Project Details ##
 
 The Project was made inspired based on the Classic Hangman Game. 
@@ -19,11 +28,12 @@ The project makes use of python programming language and its other features like
 
 ![Oh no! Game Over!!!](/images/gameover.png)
 
+<a name="req"/>
 # Requirements
 
 1. To play the game you will have to install [Python](https://www.python.org/downloads/)
 
-
+<a name="use"/>
 # Usage
 
 1. After installing it go ahead and open your Command Prompt(for Windows) or Terminal(MacOS/Linux)
