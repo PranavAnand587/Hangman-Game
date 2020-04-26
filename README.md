@@ -1,10 +1,21 @@
 # Hangman-Game
-A Simple but fun Hangman game made with Python3
 
-# Screenshots
+## Overview ##
+
+A Simple Hangman Game made with the Python Programming language as a part of our Python Programming Course’s Final Project. The project was made by the guidance of our instructor - Daksha mam.
+
+## Project Details ##
+
+The Project was made inspired based on the Classic Hangman Game. 
+At the start of the game, the player is first introduced to a story about his current situation in the game. The player is kept in the captivation of antagonist where the player is made to play the game of hangman to free his life.
+
 ![This is how the Game looks like](/images/screenshot.png)
 
+The game challenges the player to guess a word by guessing the letters of it. The player can make a maximum of six incorrect guesses. Each incorrect guess means a life lost. After six incorrect guesses, the player has the option either to replay or quit. If the player manages to guess the word before six incorrect guesses, the player wins the game
+
 ![Gameplay](/images/gameplay.png)
+
+The project makes use of python programming language and its other features like - File Handling, Import/Export Modules, functions, String formating, Random module, Colorama module, etc. The project uses ASCII art for hangman characters and certain texts.
 
 ![Oh no! Game Over!!!](/images/gameover.png)
 
